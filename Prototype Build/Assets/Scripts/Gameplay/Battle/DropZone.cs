@@ -8,11 +8,23 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
 {
     private Interactable CardData;
     public bool IsDeckArea;
-    public Transform HPCounter;
 
+    public Transform HPCounter;
     public int enemyHealth;
     public Text healthText;
     int DamageData;
+
+    public Transform StaminaCounter;
+    public int playerStamina;
+    public Text staminaText;
+    int StaminaData;
+
+    public GameObject Ball;
+
+    void Start()
+    {
+        Ball.SetActive(false);
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -34,14 +46,26 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
         {
             if (IsDeckArea == false)
             {
-                //Puts card at the far right of the dropzone
-                CardData.transform.SetAsLastSibling();
+                if (CardData.GetComponent<CardDisplay>().card.staminaCost < playerStamina)
+                {
+                    CardData.OrgParent = this.transform;
+                    //Puts card at the far right of the dropzone
+                    CardData.transform.SetAsLastSibling();
 
-                Debug.Log(CardData.name + " Was Used");
+                    Debug.Log(CardData.name + " Was Used");
 
-                DamageData = CardData.GetComponent<CardDisplay>().card.attack;
-                HealthDecrease(DamageData);
-                
+                    StaminaData = CardData.GetComponent<CardDisplay>().card.staminaCost;
+                    StaminaDecrease(StaminaData);
+
+                    DamageData = CardData.GetComponent<CardDisplay>().card.attack;
+                    HealthDecrease(DamageData);
+
+                    Ball.SetActive(true);
+                }
+                else
+                {
+                    CardData.transform.SetSiblingIndex(CardData.PlaceHoldPos.GetSiblingIndex());
+                }
             }
             else if (IsDeckArea == true)
             {
@@ -52,7 +76,7 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
 
                 Debug.Log(CardData.name + " Was Not Used");
             }
-            CardData.OrgParent = this.transform;
+            //CardData.OrgParent = this.transform;
         }
     }
 
@@ -71,14 +95,29 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
         }
     }
 
+    public void StaminaDecrease(int Stamina)
+    {
+        playerStamina -= StaminaData;
+        //enemyHealth -= 2;
+        if (playerStamina >= 0)
+        {
+            staminaText.text = playerStamina.ToString();
+        }
+        else
+        {
+            playerStamina = 0;
+            staminaText.text = playerStamina.ToString();
+        }
+    }
+
     public void LateUpdate()
     {
-        if(IsDeckArea == false)
+        if (IsDeckArea == false)
         {
-            if(this.transform.childCount > 0)
+            if (this.transform.childCount > 0)
             {
                 Debug.Log("Somethings Here");
-                foreach(Transform Child in this.transform)
+                foreach (Transform Child in this.transform)
                 {
                     Child.gameObject.SetActive(false);
                 }
