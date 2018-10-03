@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Bash
   artwork: {fileID: 0}
-  description: 
+  description: Deal 1 damage to enemy
   staminaCost: 2
   attack: 1
   defence: 0

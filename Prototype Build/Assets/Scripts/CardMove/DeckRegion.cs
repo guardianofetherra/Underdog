@@ -5,6 +5,7 @@ using UnityEngine;
 public class DeckRegion : MonoBehaviour
 {
     public bool inDeckRegion;
+    public GameObject PlayerTurn;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class DeckRegion : MonoBehaviour
         {
             inDeckRegion = true;
             Debug.Log("Detected");
+            PlayerTurn.SetActive(true);
         }
     }
 }

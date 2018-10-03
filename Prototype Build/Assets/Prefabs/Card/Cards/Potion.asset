@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Potion
   artwork: {fileID: 0}
-  description: 
+  description: Drink a potion restoring 2HP
   staminaCost: 1
   attack: 0
   defence: 0

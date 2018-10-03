@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Kick
   artwork: {fileID: 0}
-  description: 
+  description: Kick the enemy dealing 1 damage
   staminaCost: 1
   attack: 1
   defence: 0

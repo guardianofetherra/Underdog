@@ -6,24 +6,36 @@ using UnityEngine.UI;
 public class StaminaCounter : MonoBehaviour
 {
 
+    public int playerStamina;
+    [HideInInspector] public int currentStamina;
     public Text staminaText;
-    public int stamina;
+    int StaminaData;
 
-    public Transform SelectionArea;
-
-    public void StaminaDecrease()
+    public void Start()
     {
-        stamina -= (SelectionArea.GetChild(0).GetComponent<CardDisplay>().card.staminaCost);
+        currentStamina = playerStamina;
+        staminaText.text = currentStamina.ToString();
+    }
+
+    public void StaminaDecrease(int Stamina)
+    {
+        currentStamina -= Stamina;
         //enemyHealth -= 2;
-        if (stamina >= 0)
+        if (playerStamina >= 0)
         {
-            staminaText.text = stamina.ToString();
+            staminaText.text = currentStamina.ToString();
         }
         else
         {
-            stamina = 0;
-            staminaText.text = stamina.ToString();
+            playerStamina = 0;
+            staminaText.text = currentStamina.ToString();
         }
+    }
+
+    public void Replenish()
+    {
+        currentStamina = playerStamina;
+        staminaText.text = currentStamina.ToString();
     }
 
 }

@@ -9,6 +9,7 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
     private Interactable CardData;
     public bool IsDeckArea;
 
+    /*
     public Transform HPCounter;
     public int enemyHealth;
     public Text healthText;
@@ -18,20 +19,30 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
     public int playerStamina;
     public Text staminaText;
     int StaminaData;
+    */
+    public GameObject HPCounter;
+    private HealthCounter HP;
+    int DamageData;
+    public GameObject StaminaCounter;
+    private StaminaCounter Stamina;
+    int StaminaData;
 
+    public SwitchtoDeck Trigger;
     public GameObject Ball;
+
+    public delegate void DropDelegate();
+    public static event DropDelegate OnDropEvent;
 
     void Start()
     {
+        HP = HPCounter.GetComponent<HealthCounter>();
+        Stamina = StaminaCounter.GetComponent<StaminaCounter>();
         Ball.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         //Debug.Log("Something Entered");
-
-        //Debug.Log(this.transform.childCount);
-
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -46,7 +57,7 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
         {
             if (IsDeckArea == false)
             {
-                if (CardData.GetComponent<CardDisplay>().card.staminaCost < playerStamina)
+                if (CardData.GetComponent<CardDisplay>().card.staminaCost <= Stamina.currentStamina && Trigger.endTurn == false)
                 {
                     CardData.OrgParent = this.transform;
                     //Puts card at the far right of the dropzone
@@ -55,12 +66,17 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
                     Debug.Log(CardData.name + " Was Used");
 
                     StaminaData = CardData.GetComponent<CardDisplay>().card.staminaCost;
-                    StaminaDecrease(StaminaData);
+                    Stamina.StaminaDecrease(StaminaData);
 
                     DamageData = CardData.GetComponent<CardDisplay>().card.attack;
-                    HealthDecrease(DamageData);
+                    HP.HealthDecrease(DamageData);
 
                     Ball.SetActive(true);
+
+                    if(OnDropEvent != null)
+                    {
+                        OnDropEvent();
+                    }
                 }
                 else
                 {
@@ -69,48 +85,15 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
             }
             else if (IsDeckArea == true)
             {
-                //Needs
                 //Return it to original position before it was placed in the other dropzone
                 CardData.transform.SetSiblingIndex(CardData.PlaceHoldPos.GetSiblingIndex());
-                //CardData.transform.SetSiblingIndex(CardData.PlaceHolder.transform.GetSiblingIndex());
 
                 Debug.Log(CardData.name + " Was Not Used");
             }
-            //CardData.OrgParent = this.transform;
         }
     }
 
-    public void HealthDecrease(int Damage)
-    {
-        enemyHealth -= Damage;
-        //enemyHealth -= 2;
-        if (enemyHealth >= 0)
-        {
-            healthText.text = enemyHealth.ToString();
-        }
-        else
-        {
-            enemyHealth = 0;
-            healthText.text = enemyHealth.ToString();
-        }
-    }
-
-    public void StaminaDecrease(int Stamina)
-    {
-        playerStamina -= StaminaData;
-        //enemyHealth -= 2;
-        if (playerStamina >= 0)
-        {
-            staminaText.text = playerStamina.ToString();
-        }
-        else
-        {
-            playerStamina = 0;
-            staminaText.text = playerStamina.ToString();
-        }
-    }
-
-    public void LateUpdate()
+    public void Update()
     {
         if (IsDeckArea == false)
         {
@@ -119,8 +102,22 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
                 Debug.Log("Somethings Here");
                 foreach (Transform Child in this.transform)
                 {
-                    Child.gameObject.SetActive(false);
+
+                    CardData.transform.SetParent(CardData.PlaceHolder.transform.parent);
+                    Destroy(CardData.PlaceHolder);
+                    CardData.gameObject.SetActive(false);
                 }
+            }
+        }
+    }
+    
+    public void Reset()
+    {
+        if(IsDeckArea == true)
+        {
+            foreach(Transform Child in this.transform)
+            {
+                Child.gameObject.SetActive(true);
             }
         }
     }

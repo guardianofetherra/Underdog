@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AI\EnemyAttack.cs" />
     <Compile Include="Assets\Scripts\CardMove\CardMove.cs" />
     <Compile Include="Assets\Scripts\CardMove\DeckRegion.cs" />
     <Compile Include="Assets\Scripts\CardMove\ReturnDeck.cs" />
@@ -70,6 +71,8 @@
     <Compile Include="Assets\Scripts\Gameplay\Battle\HealthCounter.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Battle\Interactable.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Battle\StaminaCounter.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\PlayerFeedback\ModelFeedback.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\Roaming\BaseMovement.cs" />
     <Compile Include="Assets\Scripts\Roaming\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Roaming\CameraFollow.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="Assets\Scripts\UI\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\HaloGlow.cs" />
     <Compile Include="Assets\Scripts\UI\TurnCounter.cs" />
+    <Compile Include="Assets\Scripts\UI\TurnInvisible.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/User/Desktop/GDSem5/Game Project Studio 2/GitHubsShared/Prototype Build/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Dash
   artwork: {fileID: 0}
-  description: 
+  description: Dash and tackle enemy dealing 3 damage
   staminaCost: 3
   attack: 3
   defence: 0

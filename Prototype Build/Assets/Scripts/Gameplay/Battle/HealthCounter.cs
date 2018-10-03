@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthCounter : MonoBehaviour {
+public class HealthCounter : MonoBehaviour
+{
 
-    public Text healthText;
     public int enemyHealth;
+    public Text healthText;
+    int DamageData;
 
-    public Transform SelectionArea;
-
-    public void HealthDecrease()
+    public void Start()
     {
-        enemyHealth -= (SelectionArea.GetChild(0).GetComponent<CardDisplay>().card.attack);
-        //enemyHealth -= 2;
+        healthText.text = enemyHealth.ToString();
+    }
+
+    public void HealthDecrease(int Damage)
+    {
+        enemyHealth -= Damage;
         if (enemyHealth >= 0)
         {
             healthText.text = enemyHealth.ToString();

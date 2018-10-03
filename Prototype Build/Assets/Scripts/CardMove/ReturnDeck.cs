@@ -5,6 +5,8 @@ using UnityEngine;
 public class ReturnDeck : MonoBehaviour {
     private GameObject DeckRegion;
     private GameObject EndTurn;
+    private GameObject Enemy;
+    public GameObject EnemyTurn;
     public float speed = 5f;
     private Vector3 pos;
     private GameObject counter;
@@ -15,6 +17,7 @@ public class ReturnDeck : MonoBehaviour {
         DeckRegion = GameObject.Find("Deck");
         EndTurn = GameObject.Find("Switch");
         counter = GameObject.Find("TurnCounter");
+        Enemy = GameObject.Find("EnemyModel");
         gameObject.SetActive(false);
         pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
     }
@@ -34,6 +37,9 @@ public class ReturnDeck : MonoBehaviour {
             gameObject.transform.position = pos;
             DeckRegion.GetComponent<DeckRegion>().inDeckRegion = false;
             counter.GetComponent<TurnCounter>().nextTurn = true;
+            EndTurn.GetComponent<SwitchtoDeck>().endTurn = false;
+            Enemy.GetComponent<EnemyAttack>().Attacked = false;
+            EnemyTurn.SetActive(false);
         }
     }
 }
