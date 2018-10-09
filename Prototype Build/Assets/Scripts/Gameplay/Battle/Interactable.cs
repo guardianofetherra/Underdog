@@ -60,7 +60,7 @@ public class Interactable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         Debug.Log(this.transform.GetSiblingIndex());
 
-        Destroy(PlaceHolder);
+        //Destroy(PlaceHolder);
         //Save Placeholder Data
     }
 }

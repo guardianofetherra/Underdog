@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Indicator2
   - Indicator1
+  - EnemyModel
+  - PlayerModel
   layers:
   - Default
   - TransparentFX

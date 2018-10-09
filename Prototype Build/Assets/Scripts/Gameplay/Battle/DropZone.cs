@@ -32,6 +32,7 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
 
     public delegate void DropDelegate();
     public static event DropDelegate OnDropEvent;
+    public GameObject Player;
 
     void Start()
     {
@@ -102,11 +103,11 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
                 Debug.Log("Somethings Here");
                 foreach (Transform Child in this.transform)
                 {
-
                     CardData.transform.SetParent(CardData.PlaceHolder.transform.parent);
                     Destroy(CardData.PlaceHolder);
                     CardData.gameObject.SetActive(false);
                 }
+                Player.GetComponent<ModelFeedback>().isJump = true;
             }
         }
     }
